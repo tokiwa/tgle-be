@@ -11,6 +11,13 @@
 |
 */
 
+
+Route::get('/test1', function () {
+    return view('index');
+});
+Route::post('/test1', 'MainController@write1');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
