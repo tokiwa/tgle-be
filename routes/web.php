@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/sample', function (){
+Route::get('api/sample', function (){
      return 'Sample';
 });
 
 //json
-Route::get('/json', function () {
+Route::get('api/json', function () {
     return response()->json([
         'name' => 'taro',
         'id' => 1
