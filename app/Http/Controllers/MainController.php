@@ -17,8 +17,11 @@ class MainController extends Controller
 //         return $data1;
 
         return response()->json([
-            'code' => '1',
-            'name' => 'eigyou'
+//            'code' => '1',
+//            'name' => 'eigyou'
+//      送信されたデータをそのまま返すように変更した。漢字も文字化けせずに送信できる、
+            'code' => $json1,
+            'name' => $json2
         ]);
     }
 }

@@ -11,13 +11,25 @@
 |
 */
 
+Route::get('/sample', function (){
+     return 'Sample';
+});
 
+//json
+Route::get('/json', function () {
+    return response()->json([
+        'name' => 'taro',
+        'id' => 1
+    ]);
+});
+
+// ajax, json sample program
 Route::get('/test1', function () {
     return view('index');
 });
 Route::post('/test1', 'MainController@write1');
 
-
+// original
 Route::get('/', function () {
     return view('welcome');
 });

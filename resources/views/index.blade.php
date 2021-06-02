@@ -15,7 +15,7 @@
     $(function() {
         $("#button1").click(function() {
             var json1 = {
-                "bangou": "1",
+                "bangou": "10",
                 "name": "鈴木"
             };
             $.ajaxSetup({
