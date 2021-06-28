@@ -18,7 +18,7 @@ Route::get('api/sample', function (){
 //json
 Route::get('api/json', function () {
     return response()->json([
-        'name' => 'taro',
+        'name' => '田中',
         'id' => 1
     ]);
 });
