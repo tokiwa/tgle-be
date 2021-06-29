@@ -23,6 +23,9 @@ Route::get('api/json', function () {
     ]);
 });
 
+//json
+Route::get('api/resp', 'RespController@index');
+
 // ajax, json sample program
 Route::get('/test1', function () {
     return view('index');
