@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function write1(Request $request)
+    public function getdata(Request $request)
     {
         $json1 = $request->input('bangou');
         //echo 'a: '.$json1;
@@ -24,4 +24,17 @@ class MainController extends Controller
             'name' => $json2
         ]);
     }
+
+    public function postdata(Request $request)
+    {
+//        header("Access-Control-Allow-Origin: *");  //CORS
+//        header("Access-Control-Allow-Headers: Origin, X-Requested-With");
+
+        $data = $request->input('name');
+
+//        return $data;
+        return response()->json(['name' => $data]);
+    }
+
+
 }

@@ -11,6 +11,15 @@
 |
 */
 
+//Route::post('test2', 'MainController@postdata');
+
+///Route::middleware(['cors'])->group(function () {
+//    Route::options('test2', function () {
+//        return response()->json();
+//    });
+///    Route::post('test2', 'MainController@postdata');
+///});
+
 Route::get('api/sample', function (){
      return 'Sample';
 });
@@ -27,10 +36,11 @@ Route::get('api/json', function () {
 Route::get('api/resp', 'RespController@index');
 
 // ajax, json sample program
-Route::get('/test1', function () {
+Route::get('test1', function () {
     return view('index');
 });
-Route::post('/test1', 'MainController@write1');
+Route::post('test1', 'MainController@getdata');
+//Route::post('test2', 'MainController@postdata');
 
 // original
 Route::get('/', function () {
