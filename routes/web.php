@@ -11,15 +11,6 @@
 |
 */
 
-//Route::post('test2', 'MainController@postdata');
-
-///Route::middleware(['cors'])->group(function () {
-//    Route::options('test2', function () {
-//        return response()->json();
-//    });
-///    Route::post('test2', 'MainController@postdata');
-///});
-
 Route::get('api/sample', function (){
      return 'Sample';
 });

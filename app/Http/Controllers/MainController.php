@@ -27,13 +27,8 @@ class MainController extends Controller
 
     public function postdata(Request $request)
     {
-//        header("Access-Control-Allow-Origin: *");  //CORS
-//        header("Access-Control-Allow-Headers: Origin, X-Requested-With");
-
-        $data = $request->input('name');
-
-//        return $data;
-        return response()->json(['name' => $data]);
+        $data = $request->input('date');
+        return response()->json(['date' => $data]);
     }
 
 
