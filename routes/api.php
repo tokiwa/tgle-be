@@ -17,6 +17,13 @@ Route::group(['middleware' => ['api']], function() {
     Route::post('test2', 'MainController@postdata');
 });
 
+Route::group(['middleware' => ['api']], function() {
+    Route::post('test', 'MainController@receivedata');
+});
+
+Route::group(['middleware' => ['api']], function() {
+    Route::post('test4a', 'MainController@test4a');
+});
 
 //Default setting
 Route::middleware('auth:api')->get('/user', function (Request $request) {
