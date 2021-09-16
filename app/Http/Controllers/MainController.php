@@ -25,7 +25,7 @@ class MainController extends Controller
         ]);
     }
 
-    public function postdata(Request $request)
+    public function postkeyword(Request $request)
     {
 //        $data = $request->input('date');
 //        return response()->json(['date' => $data]);
@@ -39,17 +39,15 @@ class MainController extends Controller
         //  }
         $data = $request->input();
 
-//        $course = $request->input('course');
-        $course = $data['course'];
-        $userid = $data['userid'];
-        $lessonid = $data['lessonid'];
+        $course = $data['course'] ?? null;
+        $userid = $data['userid'] ?? null;
+        $lessonid = $data['lessonid'] ?? null;
 
         $count = count($data['keyword']);
         for ($i = 0; $i < $count; ++$i) {
             $keyword[$i] = $data['keyword'][$i];
         }
-//        return response()->json(['keyword1' => $keyword[1]]);
-        return response()->json(['keyword1' => $data['userid']]);
+        return response()->json(['keyword' => $data['keyword']]);
 
     }
 

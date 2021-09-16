@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['api']], function() {
-    Route::post('test2', 'MainController@postdata');
+    Route::post('postkeyword', 'MainController@postkeyword');
 });
 
 Route::group(['middleware' => ['api']], function() {
