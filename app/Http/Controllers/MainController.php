@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Calendar;
+use App\Keyword;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -27,23 +29,18 @@ class MainController extends Controller
 
     public function postkeyword(Request $request)
     {
-//        $data = $request->input('date');
-//        return response()->json(['date' => $data]);
-
-        //   下記でpostmanにてpostしたときのデータの取りだし
-        //  {
-        //  "keyword": ["慶応義塾大学", "東京大学","早稲田大学"],
-        //  "course": "u3003",
-        //  "userid": "user1",
-        //  "lessonid":1
-        //  }
         $data = $request->input();
 
         $course = $data['course'] ?? null;
         $userid = $data['userid'] ?? null;
         $lessonid = $data['lessonid'] ?? null;
 
+
+        //$keywords = Keyword::pluck('keyword');
+        $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
+
         $count = count($data['keyword']);
+
         for ($i = 0; $i < $count; ++$i) {
             $keyword[$i] = $data['keyword'][$i];
         }
