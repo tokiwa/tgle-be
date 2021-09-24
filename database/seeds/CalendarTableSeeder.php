@@ -11,12 +11,12 @@ class CalendarTableSeeder extends Seeder
      */
     public function run()
     {
-        // TGLE3
-        $calendar = Calendar::create([
-            'lesson_at'     => '2012-07-16',
-            'course_id'    => '',
-            'issuer' => 'https://c3.yujitokiwa.jp/moodle',
-            'deployment' => '',
+        DB::table('calendars')->insert([
+            'lesson_at'=>'2021-09-27',
+            'lesson_id'=>'9999',
+            'course_id' =>'u3003',
+            'issuer'=>'https://c3.yujitokiwa.jp',
+            'deployment' =>'3'
         ]);
     }
 }
