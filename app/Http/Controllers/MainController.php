@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Calendar;
 use App\Keyword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
@@ -30,22 +32,18 @@ class MainController extends Controller
     public function postkeyword(Request $request)
     {
         $data = $request->input();
-
         $course = $data['course'] ?? null;
-        $userid = $data['userid'] ?? null;
-        $lessonid = $data['lessonid'] ?? null;
-
-
-        //$keywords = Keyword::pluck('keyword');
-        $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
+        ////  $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
 
         $count = count($data['keyword']);
-
         for ($i = 0; $i < $count; ++$i) {
-            $keyword[$i] = $data['keyword'][$i];
+            $keyword = new Keyword;
+            $keyword->user_id = $data['userid'];
+            $keyword->lesson_id = $data['lessonid'];
+            $keyword->keyword = $data['keyword'][$i];
+            $keyword->save();
         }
         return response()->json(['keyword' => $data['keyword']]);
-
     }
 
     public function receivedata(Request $request)
