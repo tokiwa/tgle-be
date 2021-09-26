@@ -35,11 +35,14 @@ class MainController extends Controller
         $course = $data['course'] ?? null;
         ////  $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
 
+        $unixtime = time(); //unixtimeをsessionidとする
+
         $count = count($data['keyword']);
         for ($i = 0; $i < $count; ++$i) {
             $keyword = new Keyword;
-            $keyword->user_id = $data['userid'];
-            $keyword->lesson_id = $data['lessonid'];
+            $keyword->userid = $data['userid'];
+            $keyword->lessonid = $data['lessonid'];
+            $keyword->sessionid = $unixtime;
             $keyword->keyword = $data['keyword'][$i];
             $keyword->save();
         }

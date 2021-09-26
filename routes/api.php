@@ -18,6 +18,10 @@ Route::group(['middleware' => ['api']], function() {
 });
 
 Route::group(['middleware' => ['api']], function() {
+    Route::post('postlessonid', 'MainController@postlessonid');
+});
+
+Route::group(['middleware' => ['api']], function() {
     Route::post('test', 'MainController@receivedata');
 });
 

@@ -13,10 +13,11 @@ class CalendarTableSeeder extends Seeder
     {
         DB::table('calendars')->insert([
             'lesson_at'=>'2021-09-27',
-            'lesson_id'=>'9999',
-            'course_id' =>'u3003',
+            'lessonid'=>'9997',
+            'courseid' =>'u3004',
             'issuer'=>'https://c3.yujitokiwa.jp',
-            'deployment' =>'3'
+            'deployment' =>'3',
+            'schoolyear' =>'2021'
         ]);
     }
 }

@@ -12,9 +12,10 @@ class KeywordTableSeeder extends Seeder
     public function run()
     {
         DB::table('keywords')->insert([
-            'user_id'=>'user2',
+            'userid'=>'user2',
             'keyword'=>'インターン',
-            'lesson_id' =>9999
+            'lessonid' =>9999,
+            'sessionid' => '123456'
         ]);
     }
 }
