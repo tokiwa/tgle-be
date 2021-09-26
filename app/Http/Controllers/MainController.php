@@ -49,6 +49,16 @@ class MainController extends Controller
         return response()->json(['keyword' => $data['keyword']]);
     }
 
+    public function postlesson(Request $request)
+    {
+        $data = $request->input();
+        ////  $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
+
+        $unixtime = time(); //unixtimeをsessionidとする
+
+        return response()->json(['title' => $data['title']]);
+    }
+
     public function receivedata(Request $request)
     {
         $data = $request->input();
