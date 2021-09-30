@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Calendar;
 use App\Keyword;
+use App\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -52,11 +53,14 @@ class MainController extends Controller
     public function postlesson(Request $request)
     {
         $data = $request->input();
-        ////  $keywords = Keyword::where('user_id',$userid)->where('lesson_id',$lessonid)->pluck('keyword')->toArray();
 
-        $unixtime = time(); //unixtimeをsessionidとする
+        $lesson = new Lesson;
+        $lesson->lessontitle = $data['lessontitle'];
+        $lesson->label = $data['label'];
+        $lesson->academicyear = $data['academicyear'];
+        $lesson->save();
 
-        return response()->json(['title' => $data['title']]);
+        return response()->json(['lessontitle' => $data['lessontitle']]);
     }
 
     public function receivedata(Request $request)
