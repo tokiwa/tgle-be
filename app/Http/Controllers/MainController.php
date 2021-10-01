@@ -46,6 +46,9 @@ class MainController extends Controller
     public function getlesson(Request $request)
     {
 
+        $lessons = Lesson::where('academicyear',2021)->pluck('lessontitle','id');
+
+        return response()->json(['lesson' => $data['lesson']]);
     }
 
 }
