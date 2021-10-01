@@ -48,7 +48,7 @@ class MainController extends Controller
 
         $lessons = Lesson::where('academicyear',2021)->pluck('lessontitle','id');
 
-        return response()->json(['lesson' => $data['lesson']]);
+        return response()->json($lessons);
     }
 
 }
