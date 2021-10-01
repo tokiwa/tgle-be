@@ -21,6 +21,11 @@ Route::group(['middleware' => ['api']], function() {
     Route::post('postlesson', 'MainController@postlesson');
 });
 
+Route::group(['middleware' => ['api']], function() {
+    Route::post('getlesson', 'MainController@getlesson');
+});
+
+
 
 Route::group(['middleware' => ['api']], function() {
     Route::post('test', 'MainController@receivedata');
