@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLessonsTable extends Migration
+class AddStatusToLessonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lessons', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('user_id');
-            $table->string('label');
-            $table->string('lessontitle');
-            $table->timestamps();
+        Schema::table('lessons', function (Blueprint $table) {
+            //
+            $table->string('status');
         });
     }
 
@@ -29,6 +26,9 @@ class CreateLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lessons');
+        Schema::table('lessons', function (Blueprint $table) {
+            //
+            $table->dropColumn('status');
+        });
     }
 }
