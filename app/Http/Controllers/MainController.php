@@ -37,6 +37,7 @@ class MainController extends Controller
         $lesson = new Lesson;
         $lesson->lessontitle = $data['lessontitle'];
         $lesson->label = $data['label'];
+        $lesson->status = 'prep';
         $lesson->academicyear = $data['academicyear'];
         $lesson->save();
 
@@ -45,8 +46,16 @@ class MainController extends Controller
 
     public function getlesson(Request $request)
     {
+        $data = $request->input();
 
-        $lessons = Lesson::where('academicyear',2021)->pluck('lessontitle','id');
+        $academicyear = $data['academicyear'];
+        $label = $data['label'];
+        $status = $data['status'];
+
+
+//        $label = 'u3003';
+//        $lessons = Lesson::where('academicyear',2021)->pluck('lessontitle','id');
+        $lessons = Lesson::where('academicyear',$academicyear)->where('label',$label)->where('status',$status)->get();
 
         return response()->json($lessons);
     }
