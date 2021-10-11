@@ -25,6 +25,9 @@ Route::group(['middleware' => ['api']], function() {
     Route::get('getlesson', 'MainController@getlesson');
 });
 
+Route::group(['middleware' => ['api']], function() {
+    Route::get('getkeyword', 'MainController@getkeyword');
+});
 
 //Default setting
 Route::middleware('auth:api')->get('/user', function (Request $request) {

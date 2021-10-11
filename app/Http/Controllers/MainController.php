@@ -60,4 +60,26 @@ class MainController extends Controller
         return response()->json($lessons);
     }
 
+    public function getkeyword(Request $request)
+    {
+        $data = $request->input();
+        $lessonid = $data['lessonid'];
+
+        $user_keyword = array();
+
+        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
+        foreach ($users as $user){
+            $userid = $user->userid;
+            $latest = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->latest()->first();
+            $lastkeywords = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->where('sessionid',$latest->sessionid)->get();
+            $keyword = array();
+            foreach ($lastkeywords as $lastkeyword){
+                $keyword[] = $lastkeyword->keyword;
+            }
+        $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
+        }
+
+        return response()->json($user_keyword);
+    }
+
 }
