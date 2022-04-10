@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+
+Route::group(['middleware' => ['api']], function() {
+    Route::post('posttest', 'MainController@posttest');
+});
+
 Route::group(['middleware' => ['api']], function() {
     Route::post('postkeyword', 'MainController@postkeyword');
 });

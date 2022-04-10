@@ -5,12 +5,40 @@ namespace App\Http\Controllers;
 use App\Calendar;
 use App\Keyword;
 use App\Lesson;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
+    public function posttest(Request $request)
+    {
+        $data = $request->input();
+//        $course = $data['course'] ?? null;
+
+        return response()->json(['keyword' => 'Success']);
+    }
+
+    public function postkeyword(Request $request)
+    {
+        $data = $request->input();
+//        $course = $data['course'] ?? null;
+
+        $unixtime = time(); //unixtimeをsessionidとする
+
+        $count = count($data['keyword']);
+        for ($i = 0; $i < $count; ++$i) {
+            $keyword = new Keyword;
+            $keyword->userid = $data['userid'];
+            $keyword->lessonid = $data['lessonid'];
+            $keyword->sessionid = $unixtime;
+            $keyword->keyword = $data['keyword'][$i];
+            $keyword->save();
+        }
+        return response()->json(['keyword' => $data['keyword']]);
+    }
+
     public function postkeyword(Request $request)
     {
         $data = $request->input();
