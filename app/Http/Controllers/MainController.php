@@ -39,25 +39,6 @@ class MainController extends Controller
         return response()->json(['keyword' => $data['keyword']]);
     }
 
-    public function postkeyword(Request $request)
-    {
-        $data = $request->input();
-//        $course = $data['course'] ?? null;
-
-        $unixtime = time(); //unixtimeをsessionidとする
-
-        $count = count($data['keyword']);
-        for ($i = 0; $i < $count; ++$i) {
-            $keyword = new Keyword;
-            $keyword->userid = $data['userid'];
-            $keyword->lessonid = $data['lessonid'];
-            $keyword->sessionid = $unixtime;
-            $keyword->keyword = $data['keyword'][$i];
-            $keyword->save();
-        }
-        return response()->json(['keyword' => $data['keyword']]);
-    }
-
     public function postlesson(Request $request)
     {
         $data = $request->input();
