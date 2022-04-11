@@ -4,16 +4,21 @@
  * @param string $data json形式のデータ
  * @return string リクエストのレスポンス
  */
+// 参考　https://www.smartllc.jp/blog/20150811-how-to-post-json-in-php/
+
 function postJson($url, $data){
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
     $result=curl_exec($ch);
-    curl_close($ch);
-    return $result;
+    echo 'RETURN:'.$result;
 }
 
+echo "<h1>post1.php @ /g/tgle3be/public</h1>";
 $json = '{
 "groupKeyword":["プライバシー", "セキュリティ", "著作権"],
 "student":[
@@ -31,15 +36,9 @@ $json = '{
 ]
 }';
 
-$array = json_decode($json, true);
-echo $array["groupKeyword"][0]."<br>";
-echo $array["groupKeyword"][1]."<br>";
-echo $array["groupKeyword"][2]."<br>";
-echo $array["student"][0][0]."<br>";
-echo $array["student"][0][1]."<br>";
-
+$array = json_decode($json, true); //連想配列に変換
+$data_json = json_encode($array);  //json形式の文字列に変換
 $url = 'http://localhost:8000/api/posttest';
-
-postJson($url, $array);
+postJson($url, $data_json);
 
 ?>
