@@ -38,7 +38,9 @@ $json = '{
 
 $array = json_decode($json, true); //連想配列に変換
 $data_json = json_encode($array);  //json形式の文字列に変換
-$url = 'http://localhost:8000/api/posttest';
+// $url = 'http://localhost:8000/api/posttest';
+$url = 'http://192.168.1.105:9700/mkgroup';
+
 postJson($url, $data_json);
 
 ?>
