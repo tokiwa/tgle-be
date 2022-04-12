@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group(['middleware' => ['api']], function() {
+    Route::get('mkgroup', 'MainController@mkgroup');
+});
 
 Route::group(['middleware' => ['api']], function() {
     Route::post('posttest', 'MainController@posttest');
