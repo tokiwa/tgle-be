@@ -22,11 +22,25 @@ class MainController extends Controller
 
     public function mkgroup(Request $request)
     {
+        function postJson($url, $data){
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $result=curl_exec($ch);
+            return $result;
+         //   echo 'RETURN:'.$result;
+        }
+
         $data = $request->input();
         $lessonid = $data['lessonid'];
 
-        $user_keyword = array();
+//        $user_keyword = array();
         $kvdata = array();
+        $studentid = array();
 
         $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
         foreach ($users as $user){
@@ -37,11 +51,23 @@ class MainController extends Controller
             foreach ($lastkeywords as $lastkeyword){
                 $keyword[] = $lastkeyword->keyword;
             }
-            $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
-            //$kvdata[] = array($keyword);
+//            $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
+            array_push($studentid, $userid);
+            array_push($kvdata, $keyword);
         }
-        $data_json = json_encode($user_keyword);
-        return response()->json(['keyword' => 'Success']);
+
+        $groupKeyword = array("プライバシー", "セキュリティ", "著作権");
+        $jdata =  array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
+
+        $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
+        $url = 'http://192.168.1.105:9700/mkgroup';
+        $res = postJson($url, $data_json);
+
+
+
+
+#        return response()->json(['result' => 'Success']);
+        return response()->json(['result' => $res]);
     }
 
     public function postkeyword(Request $request)
