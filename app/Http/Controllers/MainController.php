@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Calendar;
 use App\Keyword;
 use App\Lesson;
+use App\Group;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -63,11 +64,23 @@ class MainController extends Controller
         $url = 'http://192.168.1.105:9700/mkgroup';
         $res = postJson($url, $data_json);
 
+        $arr = json_decode($res,true);
+        $arr1 = json_decode($arr,true);
 
+//        dd($studentid);  //postman に表示される。
 
+//  グループ化された結果をgroupsに書き込む
+        foreach( $arr1 as $key => $value ){
+            $i =  (int) $key;
+            $group = new Group;
+            $group->userid = $studentid[$i];
+            $group->lessonid = $lessonid;
+            $group->groupid = (string) $value;
+//            $group->save();         //テストが終了した時点でコメントアウトをはずす。
+        }
 
-#        return response()->json(['result' => 'Success']);
-        return response()->json(['result' => $res]);
+//        return response()->json(['result' => 'Success']);
+        return response()->json(['result' => $arr1]);
     }
 
     public function postkeyword(Request $request)
