@@ -11,7 +11,7 @@ class Keyword extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'userid','keyword','lessonid','created_at','updated_at','sessionid'
+        'userid','keyword','lessonid','created_at','updated_at','sessionid','role','status'
     ];
 
 
