@@ -156,7 +156,8 @@ class MainController extends Controller
 
         $user_keyword = array();
 
-        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
+//        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
+        $users = Keyword::where('lessonid',$lessonid)->where('role','learner')->groupBy('userid')->get(['userid']);
         foreach ($users as $user){
             $userid = $user->userid;
             $latest = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->latest()->first();
@@ -177,21 +178,15 @@ class MainController extends Controller
         $lessonid = $data['lessonid'];
         $role = $data['role'];
 
-        $user_keyword = array();
+        $user_group = array();
 
-        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
+        $users = Group::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
         foreach ($users as $user){
             $userid = $user->userid;
-            $latest = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->latest()->first();
-            $lastkeywords = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->where('sessionid',$latest->sessionid)->get();
-            $keyword = array();
-            foreach ($lastkeywords as $lastkeyword){
-                $keyword[] = $lastkeyword->keyword;
-            }
-            $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
+            $latest = Group::where('lessonid',$lessonid)->where('userid',$userid)->latest()->first();
+            $user_group[] = array("group" => $latest->groupid,"user" => $userid);
         }
-
-        return response()->json($user_keyword);
+        return response()->json($user_group);
     }
 
 }
