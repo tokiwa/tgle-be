@@ -39,7 +39,6 @@ class MainController extends Controller
         $data = $request->input();
         $lessonid = $data['lessonid'];
 
-//        $user_keyword = array();
         $kvdata = array();
         $studentid = array();
 
@@ -52,7 +51,6 @@ class MainController extends Controller
             foreach ($lastkeywords as $lastkeyword){
                 $keyword[] = $lastkeyword->keyword;
             }
-//            $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
             array_push($studentid, $userid);
             array_push($kvdata, $keyword);
         }
@@ -74,7 +72,6 @@ class MainController extends Controller
         $groupKeyword = $groupkw[0];
 
         $jdata =  array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
-
         $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
         $url = 'http://192.168.1.105:9700/mkgroup';
         $res = postJson($url, $data_json);
@@ -82,19 +79,22 @@ class MainController extends Controller
         $arr = json_decode($res,true);
         $arr1 = json_decode($arr,true);
 
-//        dd($studentid);  //postman に表示される。
+//        dd($studentid);  //dump & quit()
 
 //  グループ化された結果をgroupsに書き込む
         foreach( $arr1 as $key => $value ){
             $i =  (int) $key;
+            $j = (int) $value;
             $group = new Group;
             $group->userid = $studentid[$i];
             $group->lessonid = $lessonid;
-            $group->groupid = (string) $value;
-//            $group->save();         //テストが終了した時点でコメントアウトをはずす。
+//            $group->groupid = (string) $value;
+            $group->groupid = $groupKeyword[$j];
+            $group->save();
         }
 
 //        return response()->json(['result' => 'Success']);
+        // $studentid, groupKeywordを用いて、数字ではなく学生のUseridとgroup KeywordしてDBに書き込む。
         return response()->json(['result' => $arr1]);
     }
 
@@ -166,6 +166,29 @@ class MainController extends Controller
                 $keyword[] = $lastkeyword->keyword;
             }
         $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
+        }
+
+        return response()->json($user_keyword);
+    }
+
+    public function getgroup(Request $request)
+    {
+        $data = $request->input();
+        $lessonid = $data['lessonid'];
+        $role = $data['role'];
+
+        $user_keyword = array();
+
+        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
+        foreach ($users as $user){
+            $userid = $user->userid;
+            $latest = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->latest()->first();
+            $lastkeywords = Keyword::where('lessonid',$lessonid)->where('userid',$userid)->where('sessionid',$latest->sessionid)->get();
+            $keyword = array();
+            foreach ($lastkeywords as $lastkeyword){
+                $keyword[] = $lastkeyword->keyword;
+            }
+            $user_keyword[] = array("user" => $userid,"keyword" => $keyword);
         }
 
         return response()->json($user_keyword);

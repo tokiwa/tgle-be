@@ -37,6 +37,10 @@ Route::group(['middleware' => ['api']], function() {
     Route::get('getkeyword', 'MainController@getkeyword');
 });
 
+Route::group(['middleware' => ['api']], function() {
+    Route::get('getgroup', 'MainController@getgroup');
+});
+
 //Default setting
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
