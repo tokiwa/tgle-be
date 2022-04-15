@@ -74,7 +74,7 @@ class MainController extends Controller
         $jdata =  array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
         $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
         $url = 'http://192.168.1.105:9700/mkgroup';
-        $res = postJson($url, $data_json);
+        $res = postJson($url, $data_json);  //mac miniに実装したw2vを用いたグループ生成ツールを呼び出す
 
         $arr = json_decode($res,true);
         $arr1 = json_decode($arr,true);
@@ -90,7 +90,7 @@ class MainController extends Controller
             $group->lessonid = $lessonid;
 //            $group->groupid = (string) $value;
             $group->groupid = $groupKeyword[$j];
-            $group->save();
+//            $group->save();
         }
 
 //        return response()->json(['result' => 'Success']);
