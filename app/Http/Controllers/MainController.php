@@ -127,7 +127,7 @@ class MainController extends Controller
         $lesson = new Lesson;
         $lesson->lessontitle = $data['lessontitle'];
         $lesson->label = $data['label'];
-        $lesson->status = 'prep';
+        $lesson->status = 'active';
         $lesson->academicyear = $data['academicyear'];
         $lesson->save();
 
