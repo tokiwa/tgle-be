@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
-    public function posttest(Request $request)
-    {
-        $data = $request->input();
-//        $course = $data['course'] ?? null;
-
-        return response()->json(['keyword' => 'Success']);
-    }
-
     public function mkgroup(Request $request)
     {
         function postJson($url, $data)
@@ -34,7 +26,6 @@ class MainController extends Controller
             curl_setopt($ch, CURLOPT_URL, $url);
             $result = curl_exec($ch);
             return $result;
-            //   echo 'RETURN:'.$result;
         }
 
         $data = $request->input();
@@ -56,7 +47,6 @@ class MainController extends Controller
             array_push($kvdata, $keyword);
         }
 
-        # Get Instructor Keyword = Group Keyword
         $groupkw = array();
         $users = Keyword::where('lessonid', $lessonid)->where('role', "instructor")->groupBy('userid')->get(['userid']);
         foreach ($users as $user) {
@@ -69,18 +59,15 @@ class MainController extends Controller
             }
             array_push($groupkw, $keyword);
         }
-        # userid: Instructor ID
         $groupKeyword = $groupkw[0];
 
         $jdata = array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
         $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
         $url = 'http://192.168.1.105:9700/mkgroup';
-        $res = postJson($url, $data_json);  //mac miniに実装したw2vを用いたグループ生成ツールを呼び出す
+        $res = postJson($url, $data_json); 
 
         $arr = json_decode($res, true);
         $arr1 = json_decode($arr, true);
-
-//        dd($studentid);  //dump & quit()
 
 //  グループ化された結果をgroupsに書き込む
         foreach ($arr1 as $key => $value) {
@@ -89,21 +76,16 @@ class MainController extends Controller
             $group = new Group;
             $group->userid = $studentid[$i];
             $group->lessonid = $lessonid;
-//            $group->groupid = (string) $value;
             $group->groupid = $groupKeyword[$j];
             $group->save();
         }
 
-//        return response()->json(['result' => 'Success']);
-        // $studentid, groupKeywordを用いて、数字ではなく学生のUseridとgroup KeywordしてDBに書き込む。
         return response()->json(['result' => $arr1]);
     }
 
     public function postkeyword(Request $request)
     {
         $data = $request->input();
-//        $course = $data['course'] ?? null;
-
         $unixtime = time(); //unixtimeをsessionidとする
 
         $count = count($data['keyword']);
@@ -141,10 +123,6 @@ class MainController extends Controller
         $academicyear = $data['academicyear'];
         $label = $data['label'];
         $status = $data['status'];
-
-
-//        $label = 'u3003';
-//        $lessons = Lesson::where('academicyear',2021)->pluck('lessontitle','id');
         $lessons = Lesson::where('academicyear', $academicyear)->where('label', $label)->where('status', $status)->get();
 
         return response()->json($lessons);
@@ -156,8 +134,6 @@ class MainController extends Controller
         $lessonid = $data['lessonid'];
 
         $user_keyword = array();
-
-//        $users = Keyword::where('lessonid',$lessonid)->groupBy('userid')->get(['userid']);
         $users = Keyword::where('lessonid', $lessonid)->where('role', 'learner')->groupBy('userid')->get(['userid']);
         foreach ($users as $user) {
             $userid = $user->userid;
