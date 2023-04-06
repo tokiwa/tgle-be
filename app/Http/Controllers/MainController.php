@@ -65,14 +65,12 @@ class MainController extends Controller
 
         $jdata = array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
         $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
-//        $url = 'http://192.168.1.105:9700/mkgroup';
-        $url = env('TGLE_MKGROUP_SERVER');
+        $url = env('TGLE_MKGROUP_SERVER'); // .envにて指定
         $res = postJson($url, $data_json);
 
         $arr = json_decode($res, true);
         $arr1 = json_decode($arr, true);
 
-//  グループ化された結果をgroupsに書き込む
         foreach ($arr1 as $key => $value) {
             $i = (int)$key;
             $j = (int)$value;
