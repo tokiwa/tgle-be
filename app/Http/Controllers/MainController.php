@@ -34,6 +34,8 @@ class MainController extends Controller
         $kvdata = array();
         $studentid = array();
 
+        $url = env('TGLE_MKGROUP_SERVER');
+
         $users = Keyword::where('lessonid', $lessonid)->where('role', "learner")->groupBy('userid')->get(['userid']);
         foreach ($users as $user) {
             $userid = $user->userid;
@@ -63,8 +65,9 @@ class MainController extends Controller
 
         $jdata = array('student' => $kvdata, 'groupKeyword' => $groupKeyword);
         $data_json = json_encode($jdata, JSON_UNESCAPED_UNICODE);
-        $url = 'http://192.168.1.105:9700/mkgroup';
-        $res = postJson($url, $data_json); 
+//        $url = 'http://192.168.1.105:9700/mkgroup';
+        $url = env('TGLE_MKGROUP_SERVER');
+        $res = postJson($url, $data_json);
 
         $arr = json_decode($res, true);
         $arr1 = json_decode($arr, true);
@@ -132,12 +135,12 @@ class MainController extends Controller
     {
         $data = $request->input();
         $lessonid = $data['lessonid'];
-        $role = $data['role'];        
+        $role = $data['role'];
 
         $user_keyword = array();
 
         $users = Keyword::where('lessonid', $lessonid)->where('role', $role)->groupBy('userid')->get(['userid']);
-        
+
         foreach ($users as $user) {
             $userid = $user->userid;
             $latest = Keyword::where('lessonid', $lessonid)->where('userid', $userid)->latest()->first();
