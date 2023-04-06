@@ -132,9 +132,12 @@ class MainController extends Controller
     {
         $data = $request->input();
         $lessonid = $data['lessonid'];
+        $role = $data['role'];        
 
         $user_keyword = array();
-        $users = Keyword::where('lessonid', $lessonid)->where('role', 'learner')->groupBy('userid')->get(['userid']);
+
+        $users = Keyword::where('lessonid', $lessonid)->where('role', $role)->groupBy('userid')->get(['userid']);
+        
         foreach ($users as $user) {
             $userid = $user->userid;
             $latest = Keyword::where('lessonid', $lessonid)->where('userid', $userid)->latest()->first();
